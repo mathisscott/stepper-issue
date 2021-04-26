@@ -1,57 +1,26 @@
-<form clrStepper [formGroup]="form" (ngSubmit)="submit()" style="padding: 48px">
-  <h1 style="color: red">Form state: {{ form.valid }}</h1>
-
-  <clr-stepper-panel formGroupName="firstStep">
-    <clr-step-title>First</clr-step-title>
-    <clr-step-description>First step</clr-step-description>
-    <clr-step-content *clrIfExpanded>
-      <clr-input-container>
-        <label>firstInput1</label>
-        <input clrInput formControlName="firstInput1" />
-        <clr-control-error *clrIfError="'required'"
-          >First Name Required</clr-control-error
-        >
-      </clr-input-container>
-
-      <clr-input-container>
-        <label>firstInput2</label>
-        <input clrInput formControlName="firstInput2" />
-        <clr-control-error *clrIfError="'required'"
-          >First Name Required</clr-control-error
-        >
-      </clr-input-container>
-      <button clrStepButton="next">next</button>
-    </clr-step-content>
-  </clr-stepper-panel>
-
-  <clr-stepper-panel formGroupName="secondStep">
-    <clr-step-title>Second</clr-step-title>
-    <clr-step-description>Second step</clr-step-description>
-    <clr-step-content *clrIfExpanded>
-      <clr-input-container>
-        <label>secondInput1</label>
-        <input clrInput formControlName="secondInput1" />
-        <clr-control-error *clrIfError="'required'"
-          >First Name Required</clr-control-error
-        >
-      </clr-input-container>
-
-      <clr-input-container>
-        <label>secondInput2</label>
-        <input clrInput formControlName="secondInput2" />
-        <clr-control-error *clrIfError="'required'"
-          >First Name Required</clr-control-error
-        >
-      </clr-input-container>
-      <button clrStepButton="next">next</button>
-    </clr-step-content>
-  </clr-stepper-panel>
-
-  <clr-stepper-panel formGroupName="thirdStep">
-    <clr-step-title>Third</clr-step-title>
-    <clr-step-description>Third Final step</clr-step-description>
-    <clr-step-content *clrIfExpanded>
-      <button clrStepButton="submit">submit</button>
-    </clr-step-content>
-  </clr-stepper-panel>
-</form>
+<div class="main-container">
+  <div class="content-container">
+    <div class="content-area" cds-layout="p:xl">
+      <form [formGroup]="form" cds-layout="vertical gap:md">
+        <cds-file>
+          <label>Choose files</label>
+          <input
+            type="file"
+            multiple
+            formControlName="files"
+            onclick="this.value = null"
+            (change)="onFileChange($event)"
+          />
+        </cds-file>
+        <div cds-layout="horizontal gap:md">
+          <cds-button [disabled]="!form.valid" (click)="disable()">
+            Disable input
+          </cds-button>
+          <cds-button type="button" class="btn btn-primary" (click)="enable()">
+            Enable input
+          </cds-button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

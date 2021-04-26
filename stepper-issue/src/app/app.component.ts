@@ -1,35 +1,37 @@
-import { Component, ViewChild } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators
-} from "@angular/forms";
+import { Component, OnInit, VERSION } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+
+import "@cds/core/file/register.js";
 
 @Component({
-  selector: 'my-app',
-  templateUrl: './app.component.html',
-  styleUrls: [ './app.component.scss' ]
+  selector: "my-app",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.scss"]
 })
-export class AppComponent  {
+export class AppComponent implements OnInit {
+  name = "Angular " + VERSION.major;
   form: FormGroup;
 
-  submit() {
-    console.log('ohai');
+  constructor(private formBuilder: FormBuilder) {}
+
+  ngOnInit(): void {
+    this.form = this.formBuilder.group({
+      files: ["", [Validators.required]]
+    });
   }
 
-  constructor(private formBuilder: FormBuilder) {
-    this.form = this.formBuilder.group({
-       firstStep: this.formBuilder.group({
-        firstInput1: new FormControl('', [Validators.required]),
-        firstInput2:  new FormControl('', [Validators.required])
-       }),
-      secondStep: this.formBuilder.group({
-        secondInput1: new FormControl('', [Validators.required]),
-        secondInput2:  new FormControl('', [Validators.required])
-      }),
-      thirdStep: this.formBuilder.group({
-      }),
-    });
+  onFileChange($event: Event) {
+    const target = $event.target as HTMLInputElement;
+    if (!target.value) {
+      this.form.controls.files.setValue(target.value);
+    }
+  }
+
+  disable() {
+    this.form.controls.files.disable();
+  }
+
+  enable() {
+    this.form.controls.files.enable();
   }
 }
